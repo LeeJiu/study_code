@@ -44,7 +44,7 @@ HRESULT gameStudy::init()
 			break;
 		case 1:		//세로로 긴 애
 			_ptHurdle[1].x = _hurdle[0].right + RND->getFromIntTo(100, 700);
-			_ptHurdle[1].y = RND->getFromIntTo(150, 250);
+			_ptHurdle[1].y = RND->getFromIntTo(100, 150);
 			_hurdle[1] = RectMakeCenter(_ptHurdle[1].x, _ptHurdle[1].y, 50, 300);
 			break;
 		case 2:		//정사각형
@@ -92,10 +92,9 @@ void gameStudy::update()
 	//천장 밖으로 나가지마
 	if (_rc.top < 0)
 	{
-		//왜 쪼그라드는걸까!
+		_jumpPower = 0;
 		_rc.top = 0;
 		_rc.bottom = 50;
-		_rc = RectMake(_rc.left, _rc.top, 50, 50);
 	}
 	//바닥과의 충돌
 	if (IntersectRect(&_tmp, &_rc, &_land[0]) || IntersectRect(&_tmp, &_rc, &_land[1]))
@@ -108,10 +107,19 @@ void gameStudy::update()
 	//가로로 긴 애랑 충돌
 	if (IntersectRect(&_tmp, &_rc, &_hurdle[0]))
 	{
-		_jumpPower = _gravity = _jumpCnt = 0;
-		int height = _rc.bottom - _rc.top;
-		_rc.bottom = _hurdle[0].top;
-		_rc.top = _rc.bottom - height;
+		//밑에서 박았을 때
+		if (_rc.left > _hurdle[0].left && _rc.bottom > _hurdle[0].bottom)
+		{
+			_jumpPower = 0;
+			_rc.top = _hurdle[0].bottom;
+			_rc.bottom = _rc.top + 50;
+		}
+		else
+		{
+			_jumpPower = _gravity = _jumpCnt = 0;
+			_rc.bottom = _hurdle[0].top;
+			_rc.top = _rc.bottom - 50;
+		}
 	}
 	//세로로 긴 애랑 충돌
 	if (IntersectRect(&_tmp, &_rc, &_hurdle[1]))
@@ -123,9 +131,9 @@ void gameStudy::update()
 	if (IntersectRect(&_tmp, &_rc, &_hurdle[2]) || _rc.right < 0)
 	{
 		KillTimer(_hWnd, 1);
-		MessageBox(_hWnd, "이미없져쥬거쪄", "DEAD", NULL);
+		MessageBox(_hWnd, "게임은 다시 시작된다!", "DEAD", NULL);
 		//게임을 재시작하자
-		init();		//이래도 되나?
+		init();
 	}
 
 	//바닥을 그려주자
@@ -159,7 +167,7 @@ void gameStudy::update()
 		if (_hurdle[1].right < 0)
 		{
 			_ptHurdle[1].x = _hurdle[0].right + RND->getFromIntTo(300, 500);
-			_ptHurdle[1].y = RND->getFromIntTo(150, 250);
+			_ptHurdle[1].y = RND->getFromIntTo(100, 150);
 		}
 		if (_hurdle[2].right < 0)
 		{
@@ -171,8 +179,8 @@ void gameStudy::update()
 	_hurdle[1] = RectMakeCenter(_ptHurdle[1].x, _ptHurdle[1].y, 50, 300);
 	_hurdle[2] = RectMakeCenter(_ptHurdle[2].x, _ptHurdle[2].y, 50, 50);
 
-	
-	
+	//플레이어의 위치를 다시 그려주자
+	_rc = RectMake(_rc.left, _rc.top, 50, 50);
 
 	gameNode::update();
 
