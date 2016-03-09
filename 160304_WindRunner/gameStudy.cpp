@@ -89,6 +89,15 @@ void gameStudy::update()
 		_rc.bottom -= _jumpPower;
 		_jumpPower -= _gravity;
 	}
+	//천장 밖으로 나가지마
+	if (_rc.top < 0)
+	{
+		//왜 쪼그라드는걸까!
+		_rc.top = 0;
+		_rc.bottom = 50;
+		_rc = RectMake(_rc.left, _rc.top, 50, 50);
+	}
+	//바닥과의 충돌
 	if (IntersectRect(&_tmp, &_rc, &_land[0]) || IntersectRect(&_tmp, &_rc, &_land[1]))
 	{
 		_jumpPower = _gravity = _jumpCnt = 0;
@@ -96,6 +105,7 @@ void gameStudy::update()
 		_rc.bottom = _land[0].top;
 		_rc.top = _rc.bottom - height;
 	}
+	//가로로 긴 애랑 충돌
 	if (IntersectRect(&_tmp, &_rc, &_hurdle[0]))
 	{
 		_jumpPower = _gravity = _jumpCnt = 0;
@@ -103,14 +113,14 @@ void gameStudy::update()
 		_rc.bottom = _hurdle[0].top;
 		_rc.top = _rc.bottom - height;
 	}
+	//세로로 긴 애랑 충돌
 	if (IntersectRect(&_tmp, &_rc, &_hurdle[1]))
 	{
-		int width = _rc.right - _hurdle[1].left;
 		_rc.right = _hurdle[1].left;
-		_rc.left = _rc.right - width;
-
+		_rc.left = _rc.right - 50;
 	}
-	if (IntersectRect(&_tmp, &_rc, &_hurdle[2]))
+	//정사각형이랑 충돌 / 화면 밖으로 나가면
+	if (IntersectRect(&_tmp, &_rc, &_hurdle[2]) || _rc.right < 0)
 	{
 		KillTimer(_hWnd, 1);
 		MessageBox(_hWnd, "이미없져쥬거쪄", "DEAD", NULL);
@@ -160,6 +170,9 @@ void gameStudy::update()
 	_hurdle[0] = RectMakeCenter(_ptHurdle[0].x, _ptHurdle[0].y, 300, 50);
 	_hurdle[1] = RectMakeCenter(_ptHurdle[1].x, _ptHurdle[1].y, 50, 300);
 	_hurdle[2] = RectMakeCenter(_ptHurdle[2].x, _ptHurdle[2].y, 50, 50);
+
+	
+	
 
 	gameNode::update();
 
