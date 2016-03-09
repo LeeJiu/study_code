@@ -1,5 +1,0 @@
-﻿  160302_Drag.cpp
-d:\sga_1601\과제 코드\160302_drag\160302_drag\160302_drag.cpp(76): warning C4101: 'prvWidth' :참조되지 않은 지역 변수입니다.
-d:\sga_1601\과제 코드\160302_drag\160302_drag\160302_drag.cpp(75): warning C4101: 'pt' :참조되지 않은 지역 변수입니다.
-d:\sga_1601\과제 코드\160302_drag\160302_drag\160302_drag.cpp(76): warning C4101: 'prvHeight' :참조되지 않은 지역 변수입니다.
-  160302_Drag.vcxproj -> D:\SGA_1601\과제 코드\160302_Drag\Debug\160302_Drag.exe
