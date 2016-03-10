@@ -114,6 +114,13 @@ void gameStudy::update()
 			_rc.top = _hurdle[0].bottom;
 			_rc.bottom = _rc.top + 50;
 		}
+		//왼쪽에 박았을 때
+		else if (_rc.right > _hurdle[0].left && _rc.top > _hurdle[0].top)
+		{
+			_jumpPower = -4;		//0이면 왼쪽 변에 붙어버림/재초기화 안하면 위로 올라가버림
+			_rc.right = _hurdle[0].left;
+			_rc.left = _rc.right - 50;
+		}
 		else
 		{
 			_jumpPower = _gravity = _jumpCnt = 0;
@@ -128,7 +135,8 @@ void gameStudy::update()
 		_rc.left = _rc.right - 50;
 	}
 	//정사각형이랑 충돌 / 화면 밖으로 나가면
-	if (IntersectRect(&_tmp, &_rc, &_hurdle[2]) || _rc.right < 0)
+	if (IntersectRect(&_tmp, &_rc, &_hurdle[2]) 
+		|| _rc.right < 0 || _rc.bottom > WINSIZEY)
 	{
 		KillTimer(_hWnd, 1);
 		MessageBox(_hWnd, "게임은 다시 시작된다!", "DEAD", NULL);
