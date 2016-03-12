@@ -31,7 +31,7 @@ void gameNode::release()
 
 void gameNode::update()
 {
-	InvalidateRect(_hWnd, NULL, true);
+	InvalidateRect(_hWnd, NULL, false);
 }
 
 void gameNode::render(HDC hdc)
@@ -42,8 +42,10 @@ void gameNode::render(HDC hdc)
 
 LRESULT gameNode::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
-	HDC hdc;
+	HDC hdc, MemDC;
+	HBITMAP Bitmap, OldBitmap;
 	PAINTSTRUCT ps;
+	RECT rt;
 
 	switch (iMessage)
 	{
@@ -60,12 +62,20 @@ LRESULT gameNode::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 
 	case WM_PAINT:
 	{
+		GetClientRect(_hWnd, &rt);
 		hdc = BeginPaint(_hWnd, &ps);
+		MemDC = CreateCompatibleDC(hdc);
+		Bitmap = (HBITMAP)CreateCompatibleBitmap(hdc, WINSIZEX, WINSIZEY);
+		OldBitmap = (HBITMAP)SelectObject(MemDC, Bitmap);
+		FillRect(MemDC, &rt, (HBRUSH)GetStockObject(WHITE_BRUSH));
 		//=============================
 
-		this->render(hdc);
+		this->render(MemDC);
 
 		//=============================
+		BitBlt(hdc, 0, 0, WINSIZEX, WINSIZEY, MemDC, 0, 0, SRCCOPY);
+		DeleteObject(SelectObject(MemDC, OldBitmap));
+		DeleteDC(MemDC);
 		EndPaint(_hWnd, &ps);
 	}
 	break;
