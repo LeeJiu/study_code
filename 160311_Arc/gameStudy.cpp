@@ -107,8 +107,8 @@ void gameStudy::bulletFire()
 		bullet[i].y = gunY;
 		bullet[i].angle = angle;		//발사 각도 저장
 		bullet[i].bulletSpd = 3.f;
-		bullet[i].bulletPwX = 3.f;
-		bullet[i].bulletPwY = 3.f;
+		bullet[i].bulletPwX = 5.f;
+		bullet[i].bulletPwY = 5.f;
 		bullet[i].bullet = RectMakeCenter(bullet[i].x, bullet[i].y, 10, 10);
 		break;
 	}

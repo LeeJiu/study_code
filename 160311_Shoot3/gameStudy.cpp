@@ -86,10 +86,6 @@ void gameStudy::render(HDC hdc)
 	char str[128];
 	sprintf_s(str, "gunX : %.2f gunY : %.2f", gunX, gunY);
 	TextOut(hdc, 50, 50, str, strlen(str));
-
-	char str2[128];
-	sprintf_s(str2, "atan2 : %.2f atan2 : %.2f", atan2(5, 5), atan2(-5, -5));
-	TextOut(hdc, 50, 100, str2, strlen(str2));
 }
 
 void gameStudy::bulletFire()
@@ -158,8 +154,8 @@ void gameStudy::bulletCollision()
 			if (!bullet[i].isFire || !bullet[j].isFire || i == j) continue;
 			//if (IntersectRect(&RectMake(0, 0, 0, 0), &bullet[i].bullet, &bullet[j].bullet)
 			//	&& i != j)
-			float distance = sqrt(abs(bullet[i].x - bullet[j].x) * abs(bullet[i].x - bullet[j].x)
-				+ abs(bullet[i].y - bullet[j].y) * abs(bullet[i].y - bullet[j].y));
+			float distance = sqrt((bullet[i].x - bullet[j].x) * (bullet[i].x - bullet[j].x)
+				+ (bullet[i].y - bullet[j].y) * (bullet[i].y - bullet[j].y));
 			if (distance <= 20)
 			{
 				bullet[i].angle = atan2(bullet[j].y - bullet[i].y, bullet[j].x - bullet[i].x) * (180 / PI);
