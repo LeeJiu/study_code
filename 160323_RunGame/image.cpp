@@ -236,7 +236,7 @@ HRESULT image::init(const char* fileName, float x, float y, int width, int heigh
 	_imageInfo->hMemDC = CreateCompatibleDC(hdc);
 	_imageInfo->hBit = (HBITMAP)LoadImage(_hInstance, fileName, IMAGE_BITMAP, width, height, LR_LOADFROMFILE);
 	_imageInfo->hOBit = (HBITMAP)SelectObject(_imageInfo->hMemDC, _imageInfo->hBit);
-	_imageInfo->x = x - (width / frameX / 2);		//이미지 좌표를 중앙으로 맞춤
+	_imageInfo->x = x - (width / frameX / 2);
 	_imageInfo->y = y - (height / frameY / 2);
 	_imageInfo->width = width;
 	_imageInfo->height = height;
@@ -388,6 +388,11 @@ void image::setTransColor( BOOL trans, COLORREF transColor )
 }
 
 //렌더
+void image::render(HDC hdc)
+{
+	
+}
+
 void image::render( HDC hdc, int destX, int destY )
 {
 	if (_trans)
@@ -468,46 +473,20 @@ void image::alphaRender(HDC hdc, int destX, int destY, int sourX, int sourY, int
 	if (_trans)
 	{
 		//출력해야 될 DC에 그려져 있는 내용을 blend에 그려준다
-		BitBlt(_blendImage->hMemDC, 0, 0, _imageInfo->width, _imageInfo->height,
-			hdc, destX, destY, SRCCOPY);
+		BitBlt(_blendImage->hMemDC, destX, destY, _imageInfo->width, _imageInfo->height,
+			hdc, sourX, sourY, SRCCOPY);
 
 		//출력해야 될 이미지를 blend에 그려준다
-		GdiTransparentBlt(_blendImage->hMemDC, 0, 0, sourWidth, sourHeight,
+		GdiTransparentBlt(_blendImage->hMemDC, destX, destY, sourWidth, sourHeight,
 			_imageInfo->hMemDC, sourX, sourY, sourWidth, sourHeight, _transColor);
 
 		//blendDC를 출력해야 될 DC에 그린다
 		AlphaBlend(hdc, destX, destY, sourWidth, sourHeight,
-			_blendImage->hMemDC, 0, 0, sourWidth, sourHeight, _blendFunc);
+			_blendImage->hMemDC, sourX, sourY, sourWidth, sourHeight, _blendFunc);
 	}
 	else
 	{
 		AlphaBlend(hdc, destX, destY, sourWidth, sourHeight,
-			_imageInfo->hMemDC, sourX, sourY, sourWidth, sourHeight, _blendFunc);
-	}
-}
-
-void image::alphaRender(HDC hdc, int destX, int destY, int sourX, int sourY, int sourWidth, int sourHeight, int resizeX, int resizeY, BYTE alpha)
-{
-	_blendFunc.SourceConstantAlpha = alpha;
-
-	if (_trans)
-	{
-		//출력해야 될 DC에 그려져 있는 내용을 blend에 그려준다
-		BitBlt(_blendImage->hMemDC, 0, 0, _imageInfo->width, _imageInfo->height,
-			hdc, destX, destY, SRCCOPY);
-
-		//출력해야 될 이미지를 blend에 그려준다
-		GdiTransparentBlt(_blendImage->hMemDC, resizeX / 2, resizeY / 2, sourWidth - resizeX, sourHeight - resizeY,
-				_imageInfo->hMemDC, sourX, sourY, sourWidth, sourHeight, _transColor);
-
-
-		//blendDC를 출력해야 될 DC에 그린다
-		AlphaBlend(hdc, destX, destY, sourWidth, sourHeight,
-			_blendImage->hMemDC, 0, 0, sourWidth, sourHeight, _blendFunc);
-	}
-	else
-	{
-		AlphaBlend(hdc, destX, destY, sourWidth - resizeX, sourHeight - resizeY,
 			_imageInfo->hMemDC, sourX, sourY, sourWidth, sourHeight, _blendFunc);
 	}
 }
@@ -556,6 +535,73 @@ void image::frameRender(HDC hdc, int destX, int destY, int currentFrameX, int cu
 			_imageInfo->hMemDC,
 			_imageInfo->currentFrameX * _imageInfo->frameWidth,
 			_imageInfo->currentFrameY * _imageInfo->frameHeight, SRCCOPY);
+	}
+
+}
+
+//루프 렌더
+void image::loopRender(HDC hdc, const LPRECT drawArea, int offsetX, int offsetY)
+{
+	//offset 값이 음수인 경우에 보정해준다
+	if (offsetX < 0) offsetX = _imageInfo->width + (offsetX % _imageInfo->width);
+	if (offsetY < 0) offsetY = _imageInfo->height + (offsetY % _imageInfo->height);
+
+	//그려지는 소스의 영역(image) 셋팅할 변수
+	RECT rcSour;
+	int sourWidth;
+	int sourHeight;
+
+	//그려지는 영역의 DC
+	RECT rcDest;
+
+	//그려야할 전체 영역
+	int drawAreaX = drawArea->left;
+	int drawAreaY = drawArea->top;
+	int drawAreaW = drawArea->right - drawArea->left;
+	int drawAreaH = drawArea->bottom - drawArea->top;
+
+	//세로 루프 셋팅
+	for (int y = 0; y < drawAreaH; y += sourHeight)
+	{
+		//소스(이미지 sour) 영역의 높이 계산
+		rcSour.top = (y + offsetY) % _imageInfo->height;
+		rcSour.bottom = _imageInfo->height;
+		sourHeight = rcSour.bottom - rcSour.top;
+
+		//소스의 영역이 그리기 화면을 넘어갔다면 (화면밖으로 이미지가 나갔으면)
+		if (y + sourHeight > drawAreaH)
+		{
+			//넘어간 그림의 값만큼 바텀 값을 올려주자
+			rcSour.bottom -= (y + sourHeight) - drawAreaH;
+			sourHeight = rcSour.bottom - rcSour.top;
+		}
+
+		//그려지는 영역
+		rcDest.top = y + drawAreaY;
+		rcDest.bottom = rcDest.top + sourHeight;
+
+		//가로 루프 셋팅
+		for (int x = 0; x < drawAreaW; x += sourWidth)
+		{
+			//소스의 영역 가로 계산
+			rcSour.left = (x + offsetX) % _imageInfo->width;
+			rcSour.right = _imageInfo-> width;
+			sourWidth = rcSour.right - rcSour.left;
+
+			if (x + sourWidth > drawAreaW)
+			{
+				//넘어간 만큼 right 값을 왼쪽으로
+				rcSour.right -= (x + sourWidth) - drawAreaW;
+				sourWidth = rcSour.right - rcSour.left;
+			}
+
+			//그려지는 영역
+			rcDest.left = x + drawAreaX;
+			rcDest.right = rcDest.left + sourWidth;
+
+			//그려주자
+			render(hdc, rcDest.left, rcDest.top, rcSour.left, rcSour.top, rcSour.right - rcSour.left, rcSour.bottom - rcSour.top);
+		}
 	}
 
 }

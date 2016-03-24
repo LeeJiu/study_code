@@ -7,15 +7,15 @@ class gameStudy : public gameNode
 {
 private:
 	image* _bgImage;
-	image* _sakuraIdle, * _sakuraWalk, * _sakuraJump;
+	image* _sakuraIdle, * _sakuraWalk, * _sakuraJump, * _shadow;
 
-	float _x, _y;
-	float _jumpPw;
+	float _x, _y, _oldX, _oldY;
+	float _jumpPw, _gravity;
 
 	bool _isRight, _isIdle, _isJump;
 	int _count;
 	int _index;
-
+	int _resizeX, _resizeY, _reAlpha;
 
 public:
 	gameStudy();
@@ -26,5 +26,6 @@ public:
 	void update();
 	void render(HDC hdc);
 
+	void move();
 };
 

@@ -93,17 +93,20 @@ public:
 	void setTransColor(BOOL trans, COLORREF transColor);
 
 	//렌더
+	void render(HDC hdc);
 	void render( HDC hdc, int destX, int destY );
 	void render(HDC hdc, int destX, int destY, int sourX, int sourY, int sourWidth, int sourHeight);
 
 	//알파 렌더
 	void alphaRender(HDC hdc, int destX, int destY, BYTE alpha);
 	void alphaRender(HDC hdc, int destX, int destY, int sourX, int sourY, int sourWidth, int sourHeight, BYTE alpha);
-	void image::alphaRender(HDC hdc, int destX, int destY, int sourX, int sourY, int sourWidth, int sourHeight, int resizeX, int resizeY, BYTE alpha);
 
 	//프레임 렌더
 	void frameRender(HDC hdc, int destX, int destY);
 	void frameRender(HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY);
+
+	//루프 렌더
+	void loopRender(HDC hdc, const LPRECT drawArea, int offsetX, int offsetY);
 
 	//DC얻어오기
 	inline HDC getMemDC( void ) { return _imageInfo->hMemDC; }
@@ -116,7 +119,7 @@ public:
 	inline void setY(float y) { _imageInfo->y = y; }
 	inline float getY() { return _imageInfo->y; }
 
-	//좌표 센터 / 안써
+	//좌표 센터
 	inline void setCenter(float x, float y)
 	{
 		_imageInfo->x = x - (_imageInfo->width / 2);
@@ -139,7 +142,7 @@ public:
 
 	//가로 해상도
 	inline int getWidth() { return _imageInfo->width; }
-	//세로 해상도
+	//가로 해상도
 	inline int getHeight() { return _imageInfo->height; }
 
 	//바운딩 박스
