@@ -29,8 +29,8 @@
 
 /* ===== 디파인문 ===== */
 #define WINNAME (LPTSTR)(TEXT("API_1601"))
-#define WINSTARTX 2200
-#define WINSTARTY 100
+#define WINSTARTX 10
+#define WINSTARTY 10
 #define WINSIZEX 600
 #define WINSIZEY 400
 #define CENTERX (WINSIZEX / 2)
