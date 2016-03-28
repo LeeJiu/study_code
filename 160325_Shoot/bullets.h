@@ -60,7 +60,7 @@ public:
 	void render();
 
 	//발사 함수
-	void fire(float x, float y, float enemnyX, float enemyY);
+	void fire(float x, float y, float shipX, float shipY);
 
 	//미사일 움직움직
 	void move();

@@ -46,20 +46,24 @@ void spaceShip::update(enemy** enemy)
 
 	if (KEYMANAGER->isStayKeyDown(VK_LEFT))
 	{
-		_x -= 5.f;
+		if(_x - _ship->getFrameWidth()/2 > 0)
+			_x -= 5.f;
 	}
 	if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
 	{
-		_x += 5.f;
+		if(_x + _ship->getFrameWidth()/2 < WINSIZEX)
+			_x += 5.f;
 	}
 
 	if (KEYMANAGER->isStayKeyDown(VK_UP))
 	{
-		_y -= 5.f;
+		if(_y - _ship->getFrameHeight()/2 > 0)
+			_y -= 5.f;
 	}
 		
 	if (KEYMANAGER->isStayKeyDown(VK_DOWN))
 	{
+		if(_y + _ship->getFrameHeight()/2 < WINSIZEY)
 		_y += 5.f;
 	}
 

@@ -47,13 +47,21 @@ void enemy::update(spaceShip* ship)
 
 	_y += 2.f;
 
+	if (_y > WINSIZEY)
+	{
+		if (_isDead)
+			_isDead = false;
+		_y = 0;
+	}
+
 	_count++;
 	if (!_isDead && !_ship->isDead() && _y < _ship->getY())		//플레이어보다 밑에 있으면 안쏜다
 	{
-		if (_count % 10 == 0)
+		if (_count % 100 == 0)
 		{
 			_bullet->fire(_rcEnemy.left + _enemy->getFrameWidth() / 2,
 				_rcEnemy.top + 50, _ship->getX(), _ship->getY());
+			_count = 0;
 		}
 	}
 

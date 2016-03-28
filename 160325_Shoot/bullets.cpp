@@ -142,7 +142,7 @@ void bullet::render()
 	}
 }
 
-void bullet::fire(float x, float y, float enemnyX, float enemyY)
+void bullet::fire(float x, float y, float shipX, float shipY)
 {
 	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
 	{
@@ -155,7 +155,7 @@ void bullet::fire(float x, float y, float enemnyX, float enemyY)
 		_viBullet->rc = RectMakeCenter(_viBullet->x, _viBullet->y,
 			_viBullet->bulletImage->getWidth(),
 			_viBullet->bulletImage->getHeight());
-		_viBullet->angle = MY_UTIL::getAngle(x, y, enemnyX, enemyY);
+		_viBullet->angle = MY_UTIL::getAngle(x, y, shipX, shipY);
 		break;
 	}
 }
