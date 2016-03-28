@@ -11,7 +11,6 @@ class gameStudy : public gameNode
 private:
 	spaceShip* _spaceShip;
 	enemy* _enemy[ENEMYMAX];
-	//enemy* _enemy;
 	float _x, _y;
 	int _offsetX, _offsetY;
 

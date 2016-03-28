@@ -137,9 +137,8 @@ void bullet::render()
 	{
 		if (!_viBullet->fire) continue;
 
-		_viBullet->bulletImage->render(getMemDC(), _viBullet->rc.left,
-			_viBullet->rc.top, 0, 0, _viBullet->bulletImage->getFrameWidth(),
-			_viBullet->bulletImage->getFrameHeight());
+		_viBullet->bulletImage->frameRender(getMemDC(), _viBullet->rc.left,
+			_viBullet->rc.top);
 	}
 }
 

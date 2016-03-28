@@ -12,7 +12,7 @@
 
 #define BULLETMAX 5
 #define MISSILEMAX 5
-#define ENEMYMAX 3
+#define ENEMYMAX 5
 
 
 namespace MY_UTIL

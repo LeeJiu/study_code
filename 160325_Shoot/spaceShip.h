@@ -39,6 +39,8 @@ public:
 	void die() { _isDead = true; }
 
 	//적을 쏴서 맞췄는지
-	void hit();
+	void attack();
+	//적과 충돌했는지
+	void collisionEnemy();
 };
 

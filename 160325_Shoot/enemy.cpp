@@ -16,8 +16,8 @@ HRESULT enemy::init(int i)
 {
 	_enemy = IMAGEMANAGER->addImage("enemy", "rocket.bmp", 52, 64, true, 0xff00ff);
 
-	_x = _enemy->getFrameWidth() * i + _enemy->getFrameWidth()/2;
-	_y = WINSIZEY / 5;
+	_x = _enemy->getFrameWidth() * i + _enemy->getFrameWidth()/2 * (i + 1) + 20;
+	_y = 0;
 
 	_rcEnemy = RectMakeCenter(_x, _y, 
 		_enemy->getFrameWidth(), _enemy->getFrameHeight());
@@ -45,31 +45,36 @@ void enemy::update(spaceShip* ship)
 {
 	_ship = ship;
 
+	_y += 2.f;
+
 	_count++;
-	if (!_isDead)
+	if (!_isDead && !_ship->isDead() && _y < _ship->getY())		//플레이어보다 밑에 있으면 안쏜다
 	{
-		if (_count % 100 == 0)
+		if (_count % 10 == 0)
 		{
-			_bullet->fire(_enemy->getX() + _enemy->getFrameWidth() / 2,
-				_enemy->getY() + 50, _ship->getX(), _ship->getY());
+			_bullet->fire(_rcEnemy.left + _enemy->getFrameWidth() / 2,
+				_rcEnemy.top + 50, _ship->getX(), _ship->getY());
 		}
 	}
 
-	hit();
+	_rcEnemy = RectMakeCenter(_x, _y,
+		_enemy->getFrameWidth(), _enemy->getFrameHeight());
+
+	attack();
 
 	_bullet->update();
 }
 
 void enemy::render()
 {
+	_bullet->render();
 	if (!_isDead)
 	{
-		_enemy->render(getMemDC());
+		_enemy->frameRender(getMemDC(), _rcEnemy.left, _rcEnemy.top);
 	}
-	_bullet->render();
 }
 
-void enemy::hit()
+void enemy::attack()
 {
 	for (int i = 0; i < BULLETMAX; ++i)
 	{

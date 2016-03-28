@@ -36,5 +36,5 @@ public:
 	void die() { _isDead = true; }
 
 	//ship을 맞췄는지
-	void hit();
+	void attack();
 };
