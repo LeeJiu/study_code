@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "bullets.h"
 
 
@@ -15,7 +15,7 @@ HRESULT missile::init(int bulletMax)
 	for (int i = 0; i < bulletMax; i++)
 	{
 		tagBullet bullet;
-		ZeroMemory(&bullet, sizeof(tagBullet)); //memset°ú µ¿ÀÏ ¸Ş¸ğ¸®¸¦ 0À¸·Î ÃÊ±âÈ­ ½ÃÅ²´Ù.
+		ZeroMemory(&bullet, sizeof(tagBullet)); //memsetê³¼ ë™ì¼ ë©”ëª¨ë¦¬ë¥¼ 0ìœ¼ë¡œ ì´ˆê¸°í™” ì‹œí‚¨ë‹¤.
 		bullet.bulletImage = new image;
 		bullet.bulletImage->init("breath.bmp", 40, 64, true, 0x00ff00);
 		bullet.speed = 5.f;
@@ -53,13 +53,13 @@ void missile::render()
 	}
 }
 
-//¹ß»ç ÇÔ¼ö
+//ë°œì‚¬ í•¨ìˆ˜
 void missile::fire(float x, float y)
 {
 	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
 	{
 		if (_viBullet->fire)continue;
-		//ÀÌ ¾Æ·¡·Î ³»·Á¿Ô´Ù´Â °ÍÀº ¹ß»ç°¡ ¾ÆÁ÷ ¾È µÈ ¹Ì»çÀÏ ÀÌ¶ó´Â °ÅÁö?
+		//ì´ ì•„ë˜ë¡œ ë‚´ë ¤ì™”ë‹¤ëŠ” ê²ƒì€ ë°œì‚¬ê°€ ì•„ì§ ì•ˆ ëœ ë¯¸ì‚¬ì¼ ì´ë¼ëŠ” ê±°ì§€?
 
 		_viBullet->fire = true;
 		_viBullet->x = _viBullet->fireX = x;
@@ -71,24 +71,24 @@ void missile::fire(float x, float y)
 	}
 }
 
-//¹Ì»çÀÏ ¿òÁ÷¿òÁ÷
+//ë¯¸ì‚¬ì¼ ì›€ì§ì›€ì§
 void missile::move()
 {
 	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
 	{
 		if (!_viBullet->fire) continue;
-		//ÀÌ ¾Æ·¡·Î ³»·Á¿Ô´Ù´Â °ÍÀº ¹ß»çµÈ ¹Ì»çÀÏÀÌ ÀÖ´Ù´Â °Å´Ù.
+		//ì´ ì•„ë˜ë¡œ ë‚´ë ¤ì™”ë‹¤ëŠ” ê²ƒì€ ë°œì‚¬ëœ ë¯¸ì‚¬ì¼ì´ ìˆë‹¤ëŠ” ê±°ë‹¤.
 
 		_viBullet->y -= _viBullet->speed;
 		_viBullet->rc = RectMakeCenter(_viBullet->x, _viBullet->y,
 			_viBullet->bulletImage->getWidth(),
 			_viBullet->bulletImage->getHeight());
 
-		if (_viBullet->y < 0)	//È­¸é ¹ÛÀ¸·Î ³ª°¡¸é
+		if (_viBullet->y < 0)	//í™”ë©´ ë°–ìœ¼ë¡œ ë‚˜ê°€ë©´
 		{
 			_viBullet->fire = false;
 		}
-		//ÀûÀÌ¶û Ãæµ¹ÇÏ¸é
+		//ì ì´ë‘ ì¶©ëŒí•˜ë©´
 	}
 }
 
@@ -105,7 +105,7 @@ HRESULT bullet::init(int bulletMax)
 	for (int i = 0; i < bulletMax; i++)
 	{
 		tagBullet bullet;
-		ZeroMemory(&bullet, sizeof(tagBullet)); //memset°ú µ¿ÀÏ ¸Ş¸ğ¸®¸¦ 0À¸·Î ÃÊ±âÈ­ ½ÃÅ²´Ù.
+		ZeroMemory(&bullet, sizeof(tagBullet)); //memsetê³¼ ë™ì¼ ë©”ëª¨ë¦¬ë¥¼ 0ìœ¼ë¡œ ì´ˆê¸°í™” ì‹œí‚¨ë‹¤.
 		bullet.bulletImage = new image;
 		bullet.bulletImage->init("bullet.bmp", 21, 21, true, 0xff00ff);
 		bullet.speed = 5.0f;
@@ -147,7 +147,7 @@ void bullet::fire(float x, float y, float shipX, float shipY)
 	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
 	{
 		if (_viBullet->fire)continue;
-		//ÀÌ ¾Æ·¡·Î ³»·Á¿Ô´Ù´Â °ÍÀº ¹ß»ç°¡ ¾ÆÁ÷ ¾È µÈ ¹Ì»çÀÏ ÀÌ¶ó´Â °ÅÁö?
+		//ì´ ì•„ë˜ë¡œ ë‚´ë ¤ì™”ë‹¤ëŠ” ê²ƒì€ ë°œì‚¬ê°€ ì•„ì§ ì•ˆ ëœ ë¯¸ì‚¬ì¼ ì´ë¼ëŠ” ê±°ì§€?
 
 		_viBullet->fire = true;
 		_viBullet->x = _viBullet->fireX = x;
@@ -165,7 +165,7 @@ void bullet::move()
 	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
 	{
 		if (!_viBullet->fire) continue;
-		//ÀÌ ¾Æ·¡·Î ³»·Á¿Ô´Ù´Â °ÍÀº ¹ß»çµÈ ¹Ì»çÀÏÀÌ ÀÖ´Ù´Â °Å´Ù.
+		//ì´ ì•„ë˜ë¡œ ë‚´ë ¤ì™”ë‹¤ëŠ” ê²ƒì€ ë°œì‚¬ëœ ë¯¸ì‚¬ì¼ì´ ìˆë‹¤ëŠ” ê±°ë‹¤.
 
 		_viBullet->x += cosf(_viBullet->angle) * _viBullet->speed;
 		_viBullet->y += -sinf(_viBullet->angle) * _viBullet->speed;
@@ -173,7 +173,7 @@ void bullet::move()
 			_viBullet->bulletImage->getWidth(),
 			_viBullet->bulletImage->getHeight());
 
-		if (_viBullet->y < 0 || _viBullet->x < 0 || _viBullet->x > WINSIZEX)	//È­¸é ¹ÛÀ¸·Î ³ª°¡¸é
+		if (_viBullet->y < 0 || _viBullet->x < 0 || _viBullet->x > WINSIZEX)	//í™”ë©´ ë°–ìœ¼ë¡œ ë‚˜ê°€ë©´
 		{
 			_viBullet->fire = false;
 		}
