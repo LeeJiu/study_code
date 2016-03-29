@@ -18,6 +18,8 @@ private:
 	float _x, _y;
 	bool _isDead;
 
+	int _count, _index;
+
 public:
 	spaceShip();
 	~spaceShip();
@@ -37,6 +39,9 @@ public:
 	RECT getShipRect() { return _rcShip; }
 	bool isDead() { return _isDead; }
 	void die() { _isDead = true; }
+
+	//플레이어의 프레임 설정
+	void setFrame();
 
 	//적을 쏴서 맞췄는지
 	void attack();

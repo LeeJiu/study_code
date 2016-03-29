@@ -15,7 +15,7 @@ spaceShip::~spaceShip()
 
 HRESULT spaceShip::init()
 {
-	_ship = IMAGEMANAGER->addImage("hatzling", "hatzling.bmp", 42, 44, true, 0x00ff00);
+	_ship = IMAGEMANAGER->addFrameImage("dragon", "dragon_fly.bmp", 120, 44, 2, 1, true, 0x00ff00);
 
 	_x = CENTERX;
 	_y = WINSIZEY / 5 * 4;
@@ -27,6 +27,7 @@ HRESULT spaceShip::init()
 	_ship->setY(_rcShip.top);
 
 	_isDead = false;
+	_count = _index = 0;
 
 	_missile = new missile;
 	_missile->init(MISSILEMAX);
@@ -43,6 +44,7 @@ void spaceShip::release()
 void spaceShip::update(enemy** enemy)
 {
 	_enemy = enemy;
+	_count++;
 
 	if (KEYMANAGER->isStayKeyDown(VK_LEFT))
 	{
@@ -84,6 +86,8 @@ void spaceShip::update(enemy** enemy)
 	_ship->setX(_rcShip.left);
 	_ship->setY(_rcShip.top);
 
+	setFrame();
+
 	attack();
 
 	collisionEnemy();
@@ -96,7 +100,18 @@ void spaceShip::render()
 	_missile->render();
 	if (!_isDead)
 	{
-		_ship->frameRender(getMemDC(), _rcShip.left, _rcShip.top);
+		_ship->frameRender(getMemDC(), _rcShip.left, _rcShip.top, _ship->getFrameX(), _ship->getFrameY());
+	}
+}
+
+void spaceShip::setFrame()
+{
+	if (_count % 10 == 0)
+	{
+		_index++;
+		if (_index > _ship->getMaxFrameX())
+			_index = 0;
+		_ship->setFrameX(_index);
 	}
 }
 
