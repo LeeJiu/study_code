@@ -83,7 +83,7 @@ void enemyManager::minionBulletFire()
 			float angle = MY_UTIL::getAngle(rc.left + (rc.right - rc.left) / 2,
 				rc.bottom + (rc.top - rc.bottom) / 2 + 30, _spaceShip->getX(), _spaceShip->getY());
 			_bullet->fire(rc.left + (rc.right - rc.left) / 2,
-				rc.bottom + (rc.top - rc.bottom) / 2 + 30,
+				rc.bottom + (rc.bottom - rc.top) / 2,
 				angle, 3.0f);
 		}
 	}

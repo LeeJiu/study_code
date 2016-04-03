@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "gameStudy.h"
 
 
@@ -28,7 +28,7 @@ HRESULT gameStudy::init()
 	_sakura = IMAGEMANAGER->addFrameImage("sakuraWalk", "sakura_walk.bmp", 336, 190, 6, 2, true, RGB(0, 255, 0));
 	_sakura = IMAGEMANAGER->addFrameImage("sakuraIdle", "sakura_idle.bmp", 180, 194, 3, 2, true, RGB(0, 255, 0));
 
-	//ÇÃ·¹ÀÌ¾î ÃÊ±âÈ­
+	//í”Œë ˆì´ì–´ ì´ˆê¸°í™”
 	_player.ground = OFF_GROUND;
 	_player.state = IDLE;
 	_player.x = WINSIZEX / 3;
@@ -81,7 +81,7 @@ void gameStudy::update()
 		}
 	}
 
-	//Å°¸¦ ¶¼¸é, idle motion
+	//í‚¤ë¥¼ ë–¼ë©´, idle motion
 	if (KEYMANAGER->isOnceKeyUp(VK_LEFT))
 	{
 		if (_player.state != JUMP)
@@ -102,11 +102,11 @@ void gameStudy::update()
 
 void gameStudy::render(HDC hdc)
 {
-	//¹é¹öÆÛ¿¡¼­ »Ñ·ÁÁØ´Ù
+	//ë°±ë²„í¼ì—ì„œ ë¿Œë ¤ì¤€ë‹¤
 	HDC backDC = this->getBackBuffer()->getMemDC();
 	PatBlt(backDC, 0, 0, WINSIZEX, WINSIZEY, WHITENESS);
 	//======================
-	//ÀÌ »çÀÌ¿¡¼­ ±×·ÁÁÖ¸é µÊ.
+	//ì´ ì‚¬ì´ì—ì„œ ê·¸ë ¤ì£¼ë©´ ë¨.
 
 	IMAGEMANAGER->render("background", backDC, 0, 0);
 	
@@ -132,9 +132,9 @@ void gameStudy::render(HDC hdc)
 
 void gameStudy::collision()
 {
-	if (_player.ground == ON_GROUND)	//Áö¸é¿¡ ¼­ ÀÖÀ» ¶§
+	if (_player.ground == ON_GROUND)	//ì§€ë©´ì— ì„œ ìˆì„ ë•Œ
 	{
-		// x, y·Î  rect °»½Å
+		// x, yë¡œ  rect ê°±ì‹ 
 		_player.player = { _player.x, _player.y, _player.x + 40,  _player.y + 95 };
 		
 		for (int i = 0; i < 3; i++)
@@ -144,14 +144,14 @@ void gameStudy::collision()
 				float height = _tmp.bottom - _tmp.top;
 				float width = _tmp.right - _tmp.left;
 
-				if (height > width)	// »óÀÚÀÇ ÁÂ¿ì¿¡¼­ Ãæµ¹ÇÏ¸é tmpÀÇ ³ôÀÌ°¡ ´õ ³ôÀ½
+				if (height > width)	// ìƒìì˜ ì¢Œìš°ì—ì„œ ì¶©ëŒí•˜ë©´ tmpì˜ ë†’ì´ê°€ ë” ë†’ìŒ
 				{
-					// »óÀÚÀÇ ¿ŞÂÊ¿¡¼­ Ãæµ¹
+					// ìƒìì˜ ì™¼ìª½ì—ì„œ ì¶©ëŒ
 					if (_rcBox[i].left == _tmp.left)
 					{
 						_player.x -= width;
 					}
-					// »óÀÚÀÇ ¿À¸¥ÂÊ¿¡¼­ Ãæµ¹
+					// ìƒìì˜ ì˜¤ë¥¸ìª½ì—ì„œ ì¶©ëŒ
 					else if (_rcBox[i].right == _tmp.right)
 					{
 						_player.x += width;
@@ -161,15 +161,15 @@ void gameStudy::collision()
 			}
 		}
 	}
-	else if (_player.ground == OFF_GROUND)	//°øÁß¿¡ ÀÖ°Å³ª »óÀÚ À§¿¡ ÀÖÀ» ¶§
+	else if (_player.ground == OFF_GROUND)	//ê³µì¤‘ì— ìˆê±°ë‚˜ ìƒì ìœ„ì— ìˆì„ ë•Œ
 	{
 		_player.y -= _jumpPw;
 		_jumpPw -= _gravity;
 		
-		// x, y·Î  rect °»½Å
+		// x, yë¡œ  rect ê°±ì‹ 
 		_player.player = { _player.x, _player.y, _player.x + 40,  _player.y + 95 };
 		
-		//Áö¸é¿¡ ´êÀ¸¸é
+		//ì§€ë©´ì— ë‹¿ìœ¼ë©´
 		if (IntersectRect(&_tmp, &_player.player, &_rcLand))
 		{
 			float height = _tmp.bottom - _tmp.top;
@@ -179,25 +179,25 @@ void gameStudy::collision()
 			_jumpPw = 0;
 			_gravity = 0;
 		}
-		//Á¡ÇÁÇÏ¸é
+		//ì í”„í•˜ë©´
 		else
 		{
 			for (int i = 0; i < 3; i++)
 			{
-				//Á¡ÇÁÇØ¼­ »óÀÚ À§¿¡ ¿Ã¶ó¿À¸é
+				//ì í”„í•´ì„œ ìƒì ìœ„ì— ì˜¬ë¼ì˜¤ë©´
 				if (IntersectRect(&_tmp, &_player.player, &_rcBox[i]) && _player.state == JUMP)
 				{
 					float height = _tmp.bottom - _tmp.top;
 					float width = _tmp.right - _tmp.left;
 
-					if (height > width)	// »óÀÚÀÇ ÁÂ¿ì¿¡¼­ Ãæµ¹ÇÏ¸é tmpÀÇ ³ôÀÌ°¡ ´õ ³ôÀ½
+					if (height > width)	// ìƒìì˜ ì¢Œìš°ì—ì„œ ì¶©ëŒí•˜ë©´ tmpì˜ ë†’ì´ê°€ ë” ë†’ìŒ
 					{
-						// »óÀÚÀÇ ¿ŞÂÊ¿¡¼­ Ãæµ¹
+						// ìƒìì˜ ì™¼ìª½ì—ì„œ ì¶©ëŒ
 						if (_rcBox[i].left == _tmp.left)
 						{
 							_player.x -= width;
 						}
-						// »óÀÚÀÇ ¿À¸¥ÂÊ¿¡¼­ Ãæµ¹
+						// ìƒìì˜ ì˜¤ë¥¸ìª½ì—ì„œ ì¶©ëŒ
 						else if (_rcBox[i].right == _tmp.right)
 						{
 							_player.x += width;
@@ -205,7 +205,7 @@ void gameStudy::collision()
 					}
 					else if (height < width)
 					{
-						// »óÀÚÀÇ À­ÂÊ¿¡¼­ Ãæµ¹
+						// ìƒìì˜ ìœ—ìª½ì—ì„œ ì¶©ëŒ
 						if (_rcBox[i].top == _tmp.top)
 						{
 							_player.y -= height;
@@ -214,7 +214,7 @@ void gameStudy::collision()
 						}
 					}
 				}
-				//¹Ú½º À§¿¡¼­ ¿òÁ÷ÀÏ ¶§
+				//ë°•ìŠ¤ ìœ„ì—ì„œ ì›€ì§ì¼ ë•Œ
 				else if (IntersectRect(&_tmp, &_player.player, &_rcBox[i]) && _player.state != JUMP)
 				{
 					float height = _tmp.bottom - _tmp.top;
@@ -222,12 +222,12 @@ void gameStudy::collision()
 					
 					if (height > width)
 					{
-						// »óÀÚÀÇ ¿ŞÂÊ¿¡¼­ Ãæµ¹
+						// ìƒìì˜ ì™¼ìª½ì—ì„œ ì¶©ëŒ
 						if (_rcBox[i].left == _tmp.left)
 						{
 							_player.x -= width;
 						}
-						// »óÀÚÀÇ ¿À¸¥ÂÊ¿¡¼­ Ãæµ¹
+						// ìƒìì˜ ì˜¤ë¥¸ìª½ì—ì„œ ì¶©ëŒ
 						else if (_rcBox[i].right == _tmp.right)
 						{
 							_player.x += width;
@@ -235,7 +235,7 @@ void gameStudy::collision()
 					}
 					else if (height < width)
 					{
-						// »óÀÚÀÇ À­ÂÊ¿¡¼­ Ãæµ¹
+						// ìƒìì˜ ìœ—ìª½ì—ì„œ ì¶©ëŒ
 						if (_rcBox[i].top == _tmp.top)
 						{
 							_player.y -= height;
@@ -259,25 +259,25 @@ void gameStudy::imageFrame()
 		if (_isRight)
 		{
 			_count++;
-			_sakura->setFrameY(0);		//¿À¸¥ÂÊÀ¸·Î °È´Ù°¡ idle ÀÌ¹ÌÁö ÇÁ·¹ÀÓ YÁÂÇ¥
+			_sakura->setFrameY(0);		//ì˜¤ë¥¸ìª½ìœ¼ë¡œ ê±·ë‹¤ê°€ idle ì´ë¯¸ì§€ í”„ë ˆì„ Yì¢Œí‘œ
 			if (_count % FRAME == 0)
 			{
 				_index++;
-				if (_index > _sakura->getMaxFrameX())	//ÀÎµ¦½º°¡ ¸¶Áö¸· ÇÁ·¹ÀÓº¸´Ù Å©¸é
-					_index = 0;							//Ã¹ ¹øÂ° ÀÎµ¦½º·Î / ÇÁ·¹ÀÓ ·çÇÁ µ¹ÀÚ
+				if (_index > _sakura->getMaxFrameX())	//ì¸ë±ìŠ¤ê°€ ë§ˆì§€ë§‰ í”„ë ˆì„ë³´ë‹¤ í¬ë©´
+					_index = 0;							//ì²« ë²ˆì§¸ ì¸ë±ìŠ¤ë¡œ / í”„ë ˆì„ ë£¨í”„ ëŒì
 
-				_sakura->setFrameX(_index);				//ÀÌ¹ÌÁö ÇÁ·¹ÀÓ XÁÂÇ¥¸¦ ÁöÁ¤
+				_sakura->setFrameX(_index);				//ì´ë¯¸ì§€ í”„ë ˆì„ Xì¢Œí‘œë¥¼ ì§€ì •
 			}
 		}
 		else
 		{
 			_count++;
-			_sakura->setFrameY(1);		//¿ŞÂÊÀ¸·Î °È´Ù°¡ idle ÀÌ¹ÌÁö ÇÁ·¹ÀÓ YÁÂÇ¥
+			_sakura->setFrameY(1);		//ì™¼ìª½ìœ¼ë¡œ ê±·ë‹¤ê°€ idle ì´ë¯¸ì§€ í”„ë ˆì„ Yì¢Œí‘œ
 			if (_count % FRAME == 0)
 			{
-				_index--;					//ÁÂ¿ì ¹İÀü ½ÃÅ² ÀÌ¹ÌÁö¶ó¼­ ¿À¸¥ÂÊºÎÅÍ ÀÎµ¦½º¸¦ ÀĞ¾î¿Í¾ßÇÔ
-				if (_index < 0)				//ÀÎµ¦½º°¡ Ã¹ ¹øÂ° ÇÁ·¹ÀÓº¸´Ù ÀÛ¾ÆÁö¸é
-					_index = _sakura->getMaxFrameX();	//¸¶Áö¸· ÀÎµ¦½º·Î / ÇÁ·¹ÀÓ ·çÇÁ µ¹ÀÚ
+				_index--;					//ì¢Œìš° ë°˜ì „ ì‹œí‚¨ ì´ë¯¸ì§€ë¼ì„œ ì˜¤ë¥¸ìª½ë¶€í„° ì¸ë±ìŠ¤ë¥¼ ì½ì–´ì™€ì•¼í•¨
+				if (_index < 0)				//ì¸ë±ìŠ¤ê°€ ì²« ë²ˆì§¸ í”„ë ˆì„ë³´ë‹¤ ì‘ì•„ì§€ë©´
+					_index = _sakura->getMaxFrameX();	//ë§ˆì§€ë§‰ ì¸ë±ìŠ¤ë¡œ / í”„ë ˆì„ ë£¨í”„ ëŒì
 
 				_sakura->setFrameX(_index);
 			}
@@ -289,25 +289,25 @@ void gameStudy::imageFrame()
 		if (_isRight)
 		{
 			_count++;
-			_sakura->setFrameY(0);			//¿À¸¥ÂÊÀ¸·Î °È´Â ÀÌ¹ÌÁö ÇÁ·¹ÀÓ YÁÂÇ¥
+			_sakura->setFrameY(0);			//ì˜¤ë¥¸ìª½ìœ¼ë¡œ ê±·ëŠ” ì´ë¯¸ì§€ í”„ë ˆì„ Yì¢Œí‘œ
 			if (_count % FRAME == 0)
 			{
 				_index++;
-				if (_index > _sakura->getMaxFrameX())	//ÀÎµ¦½º°¡ ¸¶Áö¸· ÇÁ·¹ÀÓº¸´Ù Å©¸é
-					_index = 0;							//Ã¹ ¹øÂ° ÀÎµ¦½º·Î / ÇÁ·¹ÀÓ ·çÇÁ µ¹ÀÚ
+				if (_index > _sakura->getMaxFrameX())	//ì¸ë±ìŠ¤ê°€ ë§ˆì§€ë§‰ í”„ë ˆì„ë³´ë‹¤ í¬ë©´
+					_index = 0;							//ì²« ë²ˆì§¸ ì¸ë±ìŠ¤ë¡œ / í”„ë ˆì„ ë£¨í”„ ëŒì
 
-				_sakura->setFrameX(_index);				//ÀÌ¹ÌÁö ÇÁ·¹ÀÓ XÁÂÇ¥¸¦ ÁöÁ¤
+				_sakura->setFrameX(_index);				//ì´ë¯¸ì§€ í”„ë ˆì„ Xì¢Œí‘œë¥¼ ì§€ì •
 			}
 		}
 		else
 		{
 			_count++;
-			_sakura->setFrameY(1);			//¿ŞÂÊÀ¸·Î °È´Â ÀÌ¹ÌÁö ÇÁ·¹ÀÓ YÁÂÇ¥
+			_sakura->setFrameY(1);			//ì™¼ìª½ìœ¼ë¡œ ê±·ëŠ” ì´ë¯¸ì§€ í”„ë ˆì„ Yì¢Œí‘œ
 			if (_count % FRAME == 0)
 			{
-				_index--;					//ÁÂ¿ì ¹İÀü ½ÃÅ² ÀÌ¹ÌÁö¶ó¼­ ¿À¸¥ÂÊºÎÅÍ ÀÎµ¦½º¸¦ ÀĞ¾î¿Í¾ßÇÔ
-				if (_index < 0)				//ÀÎµ¦½º°¡ Ã¹ ¹øÂ° ÇÁ·¹ÀÓº¸´Ù ÀÛ¾ÆÁö¸é
-					_index = _sakura->getMaxFrameX();	//¸¶Áö¸· ÀÎµ¦½º·Î / ÇÁ·¹ÀÓ ·çÇÁ µ¹ÀÚ
+				_index--;					//ì¢Œìš° ë°˜ì „ ì‹œí‚¨ ì´ë¯¸ì§€ë¼ì„œ ì˜¤ë¥¸ìª½ë¶€í„° ì¸ë±ìŠ¤ë¥¼ ì½ì–´ì™€ì•¼í•¨
+				if (_index < 0)				//ì¸ë±ìŠ¤ê°€ ì²« ë²ˆì§¸ í”„ë ˆì„ë³´ë‹¤ ì‘ì•„ì§€ë©´
+					_index = _sakura->getMaxFrameX();	//ë§ˆì§€ë§‰ ì¸ë±ìŠ¤ë¡œ / í”„ë ˆì„ ë£¨í”„ ëŒì
 
 				_sakura->setFrameX(_index);
 			}
