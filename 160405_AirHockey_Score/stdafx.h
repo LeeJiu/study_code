@@ -25,6 +25,7 @@
 #include "utils.h"
 #include "imageManager.h"
 #include "timeManager.h"
+#include "txtData.h"
 
 //using namespace MY_UTIL;
 
@@ -32,8 +33,8 @@
 #define WINNAME (LPTSTR)(TEXT("API_1601"))
 #define WINSTARTX 10
 #define WINSTARTY 10
-#define WINSIZEX 800
-#define WINSIZEY 600
+#define WINSIZEX 460
+#define WINSIZEY 640
 #define CENTERX (WINSIZEX / 2)
 #define CENTERY (WINSIZEY / 2)
 #define WINSTYLE WS_CAPTION | WS_SYSMENU
@@ -42,11 +43,12 @@
 #define SAFE_DELETE_ARRAY(p)	{if(p) { delete[] (p);		(p) = NULL;}}
 #define SAFE_RELEASE(p)			{if(p) { (p)->release();	(p) = NULL;}}
 
+/* =========== ½Ì±ÛÅæ =========== */
 #define RND randomFunction::getSingleton()
 #define KEYMANAGER keyManager::getSingleton()
 #define IMAGEMANAGER imageManager::getSingleton()
 #define TIMEMANAGER timeManager::getSingleton()
-
+#define TXTDATA txtData::getSingleton()
 
 /* ===== Àü¿ª º¯¼ö ===== */
 extern POINT _ptMouse;
