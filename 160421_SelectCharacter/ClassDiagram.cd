@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="randomFunction" Collapsed="true">
+    <Position X="1" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EIAAAAAACAAAAAAgAAAAAAAAAAAAAAAAAAAAAAABEAA=</HashCode>
+      <FileName>randomFunction.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="gameNode" Collapsed="true">
+    <Position X="14" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAgAQAAQBAEAAAAAABAAAAQAICAAAAAAAUAAA=</HashCode>
+      <FileName>gameNode.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="effectManager" Collapsed="true">
+    <Position X="5.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>kAAAAAABAAAAAAAAAIAAAAAAAACAAAIAAAIAAAAUAAA=</HashCode>
+      <FileName>effectManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="imageManager" Collapsed="true">
+    <Position X="7.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAEAQAgEAAAAAACAEAAQAAAAAIAAAIBAAAQICA=</HashCode>
+      <FileName>imageManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="keyManager" Collapsed="true">
+    <Position X="10" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAAAAIACAAEAAEEAAAAQAAAAAACIBAAIACACAAAA=</HashCode>
+      <FileName>keyManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="singletonBase&lt;T&gt;" Collapsed="true">
+    <Position X="6.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAACEAAAAAAAAAAAAAAAAQAAAAAAAACAAAAAAAA=</HashCode>
+      <FileName>singletonBase.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="timeManager" Collapsed="true">
+    <Position X="3.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAgAAAAAAAAABAAAAIAAAIAAEAgAAAUAAA=</HashCode>
+      <FileName>timeManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="image" Collapsed="true">
+    <Position X="30.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>UACAAAAAgBCAFEUAAAAeBgBAUAACwAKgAAABAGAUAAA=</HashCode>
+      <FileName>image.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="timer" Collapsed="true">
+    <Position X="29" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AARAAEACgABAEAAAAAABABBAAIAAAAIQAEAAAAABgAE=</HashCode>
+      <FileName>timer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="txtData" Collapsed="true">
+    <Position X="12.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ECAAABAAAAAAAAgAACAAAAAAAAAAAAIAAQAAgAAAAAA=</HashCode>
+      <FileName>txtData.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="progressBar" Collapsed="true">
+    <Position X="1.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAYBAQAAAAAAAAGAQAAQBAAAAIAACAAAAEUAAA=</HashCode>
+      <FileName>progressBar.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="effect" Collapsed="true">
+    <Position X="6.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAACAAIAAQAABAAAIAQAAEAAAAEBAIAIAAAAAAUEAA=</HashCode>
+      <FileName>effect.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="animation" Collapsed="true">
+    <Position X="29" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAIAAAAEAATCAEAgAQAAMIAACAEoQAYAAAAAAAACIAA=</HashCode>
+      <FileName>animation.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="gameStudy" Collapsed="true">
+    <Position X="19.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAgAAAAAAAAgAAAAAAAEAAAIAAAAAAAAUAAA=</HashCode>
+      <FileName>gameStudy.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="missile" Collapsed="true">
+    <Position X="4" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EACAAAAAAAAAAACAEIAAAABAAACAAAIABAAAJAIUAAA=</HashCode>
+      <FileName>bullets.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="bullet" Collapsed="true">
+    <Position X="8.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAQAAAAAAAACAEAAAAABAAADAAAJABBAAIAIUAAA=</HashCode>
+      <FileName>bullets.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BnS" Collapsed="true">
+    <Position X="10.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>FAAAgAAAAAAAAAAAAAAgEAAAAAAAAAIEAAAAAAAUAAA=</HashCode>
+      <FileName>BnS.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="pixelCollisionTest" Collapsed="true">
+    <Position X="22" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAIIAQAAAAAAAAABAAACAAAAAIAgCACCAAUAAA=</HashCode>
+      <FileName>pixelCollisionTest.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="effectTest" Collapsed="true">
+    <Position X="26.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAIAAQAAAAAAAAAAAAAQAAAAAAAAAIAAAAAAAAUAAA=</HashCode>
+      <FileName>effectTest.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="battle" Collapsed="true">
+    <Position X="13" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAAAACAAgAAAIAAAAAAAAUAAA=</HashCode>
+      <FileName>battle.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="carrier" Collapsed="true">
+    <Position X="15.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAIAAACAAAAAAAAAQAAAAAIAAAAABAAUAAA=</HashCode>
+      <FileName>carrier.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ship" Collapsed="true">
+    <Position X="15.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>GAABACAIAAQAAACAAAIAAAAAAAAAQAIAhCAABAAUAAA=</HashCode>
+      <FileName>ship.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="starwarsScene" Collapsed="true">
+    <Position X="24.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAAAgAAAAAAABBAIAAAAAAAAUAAA=</HashCode>
+      <FileName>starwarsScene.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="phoenix" Collapsed="true">
+    <Position X="17.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAAIAAAAAAAAAAAIAIAAAAAAUAAA=</HashCode>
+      <FileName>phoenix.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="tagBullet" Collapsed="true">
+    <Position X="29" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAECAAAAAAAAABCAAAAAAAAAQAABABgAABAAAA=</HashCode>
+      <FileName>bullets.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Font Name="맑은 고딕" Size="9" />
+</ClassDiagram>
