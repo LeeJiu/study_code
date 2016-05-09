@@ -132,7 +132,7 @@ void tile::render()
 void tile::keyControl()
 {
 	if (KEYMANAGER->isOnceKeyDown(VK_SPACE)) _remove = !_remove;
-	if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
+	if (KEYMANAGER->isStayKeyDown(VK_RETURN))
 	{
 		if (!_end)
 		{
