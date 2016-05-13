@@ -85,15 +85,6 @@ void mapTool::render()
 		_vTile[i].tile->frameRender(getMemDC(), _vTile[i].screenPos.x, _vTile[i].screenPos.y, 
 			_vTile[i].imagePos.x, _vTile[i].imagePos.y);
 	}
-
-	char str[128];
-	int j = 0;
-	for (int i = 100; j < 10; i += 20)
-	{
-		sprintf_s(str, "%d", _vTile[j].tileIdx);
-		TextOut(getMemDC(), WINSIZEX - 150, i, str, strlen(str));
-		j++;
-	}
 }
 
 void mapTool::keyControl()
