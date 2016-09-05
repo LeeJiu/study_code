@@ -126,12 +126,12 @@ void ladder::render()
 			if (_node[y][x].state == START || _node[y][x].state == END) continue;
 			if (x - 1 == COLUMN) continue;
 
-			if (_node[y][x].down == NULL)
-			{
-				char str[128];
-				sprintf_s(str, "%d", 0);
-				TextOut(getMemDC(), _node[y][x].x, _node[y][x].y, str, strlen(str));
-			}
+			//if (_node[y][x].down == NULL)
+			//{
+			//	char str[128];
+			//	sprintf_s(str, "%d", 0);
+			//	TextOut(getMemDC(), _node[y][x].x, _node[y][x].y, str, strlen(str));
+			//}
 
 			LineMake(getMemDC(), _node[y][x].x, _node[y][x].y, _node[y][x].next->x, _node[y][x].next->y);
 		}
