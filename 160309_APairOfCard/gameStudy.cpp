@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "gameStudy.h"
 
 
@@ -19,15 +19,15 @@ HRESULT gameStudy::init()
 
 	_GameStart = true;
 
-	for (int i = 0; i < COLORNUM; ++i)
+	for (int i = 0; i < ColorNum; ++i)
 	{
-		mColor[i].r = RND->getInt(255);
-		mColor[i].g = RND->getInt(255);
-		mColor[i].b = RND->getInt(255);
+		mColor[i].r = RND->getInt(256);			
+		mColor[i].g = RND->getInt(256);
+		mColor[i].b = RND->getInt(256);
 		mColor[i].cnt = 0;
 	}
 
-	for (int i = 0; i < CARDNUM; ++i)
+	for (int i = 0; i < CardNum; ++i)
 	{
 		mCard[i].isBlind = true;
 		mCard[i].color = mColor[i % 10];
@@ -35,7 +35,7 @@ HRESULT gameStudy::init()
 
 	shuffle(mCard);
 
-	for (int i = 0; i < CARDNUM; ++i)
+	for (int i = 0; i < CardNum; ++i)
 	{
 		mCard[i].card = RectMake(WINSIZEX / 5 * ((i + 1) % 5) + 50, WINSIZEY / 4 * ((i + 1) % 4) + 30, 60, 90);
 	}
@@ -56,7 +56,7 @@ void gameStudy::update()
 	{
 		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 		{
-			for (int i = 0; i < CARDNUM; ++i)
+			for (int i = 0; i < CardNum; ++i)
 			{
 				if (PtInRect(&mCard[i].card, _ptMouse))
 				{
@@ -65,24 +65,24 @@ void gameStudy::update()
 					{
 						mCard[i].isBlind = false;
 						openCnt++;
-						first = i;		//Ã¹ ¹øÂ° µÚÁýÀº Ä«µåÀÇ ÀÎµ¦½º¸¦ ÀúÀå
+						first = i;		//ì²« ë²ˆì§¸ ë’¤ì§‘ì€ ì¹´ë“œì˜ ì¸ë±ìŠ¤ë¥¼ ì €ìž¥
 						break;
 					}
 					else if (openCnt == 1)
 					{
 						mCard[i].isBlind = false;
 						openCnt++;
-						second = i;		//µÎ ¹øÂ° µÚÁýÀº Ä«µåÀÇ ÀÎµ¦½º¸¦ ÀúÀå
+						second = i;		//ë‘ ë²ˆì§¸ ë’¤ì§‘ì€ ì¹´ë“œì˜ ì¸ë±ìŠ¤ë¥¼ ì €ìž¥
 						break;
 					}
 				}
 			}
 		}
 
-		//µÎ °³¸¦ µÚÁý¾úÀ¸¸é
+		//ë‘ ê°œë¥¼ ë’¤ì§‘ì—ˆìœ¼ë©´
 		if (openCnt == 2)
 		{
-			//µÎ Ä«µåÀÇ »ö»óÀÌ °°À¸¸é
+			//ë‘ ì¹´ë“œì˜ ìƒ‰ìƒì´ ê°™ìœ¼ë©´
 			if (mCard[first].color.r == mCard[second].color.r
 				&& mCard[first].color.g == mCard[second].color.g
 				&& mCard[first].color.b == mCard[second].color.b)
@@ -127,7 +127,7 @@ void gameStudy::render(HDC hdc)
 	MyBrush = (HBRUSH)GetStockObject(DC_BRUSH);
 	OldBrush = (HBRUSH)SelectObject(hdc, MyBrush);
 
-	for (int i = 0; i < CARDNUM; ++i)
+	for (int i = 0; i < CardNum; ++i)
 	{
 		if (mCard[i].isBlind && _GameStart)
 		{
@@ -158,8 +158,8 @@ void gameStudy::shuffle(tagCard * card)
 
 	for (int i = 0; i < 50; ++i)
 	{
-		dest = RND->getInt(CARDNUM);
-		sour = RND->getInt(CARDNUM);
+		dest = RND->getInt(CardNum);
+		sour = RND->getInt(CardNum);
 
 		tmp = card[dest];
 		card[dest] = card[sour];

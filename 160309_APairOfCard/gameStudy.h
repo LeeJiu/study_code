@@ -1,9 +1,11 @@
-#pragma once
+﻿#pragma once
 
 #include "gameNode.h"
 
-#define CARDNUM 20
-#define COLORNUM 10
+/*#define CARDNUM 20*/
+const int CardNum = 20;
+const int ColorNum = CardNum / 2;
+/*#define COLORNUM 10*/
 
 struct tagColor
 {
@@ -20,8 +22,8 @@ struct tagCard
 class gameStudy : public gameNode
 {
 private:
-	tagColor mColor[COLORNUM];
-	tagCard mCard[CARDNUM];
+	tagColor mColor[ColorNum];
+	tagCard mCard[CardNum];
 	int timeCnt, openCnt, clearCnt, first, second;
 	bool _GameStart;
 
