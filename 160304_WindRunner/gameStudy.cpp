@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "gameStudy.h"
 
 
@@ -15,18 +15,19 @@ HRESULT gameStudy::init()
 {
 	gameNode::init();
 
-	_jumpPower = _gravity = _isJump = _jumpCnt = 0;
+	_jumpPower = _gravity = _jumpCnt = 0;
+	_isJump = false;			//ë³€ìˆ˜ íƒ€ì…ì´ ë‹¤ë¥¸ë° ê°™ì€ ê°’ìœ¼ë¡œ ì´ˆê¸°í™” í•˜ë©´ ì•ˆë¨
 
 	_rc = RectMakeCenter(WINSIZEX / 3, WINSIZEY - 100, 50, 50);
 
 	_ptLand[0].x = WINSIZEX / 3;
 	_ptLand[0].y = WINSIZEY - 50;
-	_width[0] = 300 + RND->getInt(300);		//³ĞÀÌ 300~600
+	_width[0] = 300 + RND->getInt(300);		//ë„“ì´ 300~600
 	_height = 50;
 	
-	_ptLand[1].x = _ptLand[0].x + _width[0] + INTERVAL;	//¹Ù´Ú °£°İÀº 300
+	_ptLand[1].x = _ptLand[0].x + _width[0] + INTERVAL;	//ë°”ë‹¥ ê°„ê²©ì€ 300
 	_ptLand[1].y = WINSIZEY - 50;
-	_width[1] = 300 + RND->getInt(300);		//³ĞÀÌ 300~600
+	_width[1] = 300 + RND->getInt(300);		//ë„“ì´ 300~600
 
 	for (int i = 0; i < 2; ++i)
 	{
@@ -37,17 +38,17 @@ HRESULT gameStudy::init()
 	{
 		switch (i)
 		{
-		case 0:		//°¡·Î·Î ±ä ¾Ö
+		case 0:		//ê°€ë¡œë¡œ ê¸´ ì• 
 			_ptHurdle[0].x = RND->getFromIntTo(100, 300);
 			_ptHurdle[0].y = RND->getFromIntTo(200, 350);
 			_hurdle[0] = RectMakeCenter(_ptHurdle[0].x, _ptHurdle[0].y, 300, 50);
 			break;
-		case 1:		//¼¼·Î·Î ±ä ¾Ö
+		case 1:		//ì„¸ë¡œë¡œ ê¸´ ì• 
 			_ptHurdle[1].x = _hurdle[0].right + RND->getFromIntTo(100, 700);
 			_ptHurdle[1].y = RND->getFromIntTo(100, 150);
 			_hurdle[1] = RectMakeCenter(_ptHurdle[1].x, _ptHurdle[1].y, 50, 300);
 			break;
-		case 2:		//Á¤»ç°¢Çü
+		case 2:		//ì •ì‚¬ê°í˜•
 			_ptHurdle[2].x = _hurdle[1].right + RND->getFromIntTo(100, 700);
 			_ptHurdle[2].y = RND->getFromIntTo(200, 350);
 			_hurdle[2] = RectMakeCenter(_ptHurdle[2].x, _ptHurdle[2].y, 50, 50);
@@ -71,13 +72,13 @@ void gameStudy::update()
 		if (_jumpCnt == 0)
 		{
 			_jumpCnt++;
-			_jumpPower = 4;
+			_jumpPower = 4.0f;
 			_gravity = 0.1f;
 		}
 		else if (_jumpCnt == 1)
 		{
 			_jumpCnt++;
-			_jumpPower += 4;
+			_jumpPower += 4.0f;
 			_gravity = 0.1f;
 		}
 	}
@@ -89,62 +90,64 @@ void gameStudy::update()
 		_rc.bottom -= _jumpPower;
 		_jumpPower -= _gravity;
 	}
-	//ÃµÀå ¹ÛÀ¸·Î ³ª°¡Áö¸¶
+	//ì²œì¥ ë°–ìœ¼ë¡œ ë‚˜ê°€ì§€ë§ˆ
 	if (_rc.top < 0)
 	{
 		_jumpPower = 0;
 		_rc.top = 0;
 		_rc.bottom = 50;
 	}
-	//¹Ù´Ú°úÀÇ Ãæµ¹
+	//ë°”ë‹¥ê³¼ì˜ ì¶©ëŒ
 	if (IntersectRect(&_tmp, &_rc, &_land[0]) || IntersectRect(&_tmp, &_rc, &_land[1]))
 	{
-		_jumpPower = _gravity = _jumpCnt = 0;
+		_jumpPower = _gravity = 0.0f;
+		_jumpCnt = 0;
 		int height = _rc.bottom - _rc.top;
 		_rc.bottom = _land[0].top;
 		_rc.top = _rc.bottom - height;
 	}
-	//°¡·Î·Î ±ä ¾Ö¶û Ãæµ¹
+	//ê°€ë¡œë¡œ ê¸´ ì• ë‘ ì¶©ëŒ
 	if (IntersectRect(&_tmp, &_rc, &_hurdle[0]))
 	{
-		//¹Ø¿¡¼­ ¹Ú¾ÒÀ» ¶§
+		//ë°‘ì—ì„œ ë°•ì•˜ì„ ë•Œ
 		if (_rc.left > _hurdle[0].left && _rc.bottom > _hurdle[0].bottom)
 		{
-			_jumpPower = 0;
+			_jumpPower = 0.f;
 			_rc.top = _hurdle[0].bottom;
 			_rc.bottom = _rc.top + 50;
 		}
-		//¿ŞÂÊ¿¡ ¹Ú¾ÒÀ» ¶§
+		//ì™¼ìª½ì— ë°•ì•˜ì„ ë•Œ
 		else if (_rc.right > _hurdle[0].left && _rc.top > _hurdle[0].top)
 		{
-			_jumpPower = -4;		//0ÀÌ¸é ¿ŞÂÊ º¯¿¡ ºÙ¾î¹ö¸²/ÀçÃÊ±âÈ­ ¾ÈÇÏ¸é À§·Î ¿Ã¶ó°¡¹ö¸²
+			_jumpPower = -4;		//0ì´ë©´ ì™¼ìª½ ë³€ì— ë¶™ì–´ë²„ë¦¼/ì¬ì´ˆê¸°í™” ì•ˆí•˜ë©´ ìœ„ë¡œ ì˜¬ë¼ê°€ë²„ë¦¼
 			_rc.right = _hurdle[0].left;
 			_rc.left = _rc.right - 50;
 		}
 		else
 		{
-			_jumpPower = _gravity = _jumpCnt = 0;
+			_jumpPower = _gravity = 0.f;
+			_jumpCnt = 0;
 			_rc.bottom = _hurdle[0].top;
 			_rc.top = _rc.bottom - 50;
 		}
 	}
-	//¼¼·Î·Î ±ä ¾Ö¶û Ãæµ¹
+	//ì„¸ë¡œë¡œ ê¸´ ì• ë‘ ì¶©ëŒ
 	if (IntersectRect(&_tmp, &_rc, &_hurdle[1]))
 	{
 		_rc.right = _hurdle[1].left;
 		_rc.left = _rc.right - 50;
 	}
-	//Á¤»ç°¢ÇüÀÌ¶û Ãæµ¹ / È­¸é ¹ÛÀ¸·Î ³ª°¡¸é
+	//ì •ì‚¬ê°í˜•ì´ë‘ ì¶©ëŒ / í™”ë©´ ë°–ìœ¼ë¡œ ë‚˜ê°€ë©´
 	if (IntersectRect(&_tmp, &_rc, &_hurdle[2]) 
 		|| _rc.right < 0 || _rc.bottom > WINSIZEY)
 	{
 		KillTimer(_hWnd, 1);
-		MessageBox(_hWnd, "°ÔÀÓÀº ´Ù½Ã ½ÃÀÛµÈ´Ù!", "DEAD", NULL);
-		//°ÔÀÓÀ» Àç½ÃÀÛÇÏÀÚ
+		MessageBox(_hWnd, "ê²Œì„ì€ ë‹¤ì‹œ ì‹œì‘ëœë‹¤!", "DEAD", NULL);
+		//ê²Œì„ì„ ì¬ì‹œì‘í•˜ì
 		init();
 	}
 
-	//¹Ù´ÚÀ» ±×·ÁÁÖÀÚ
+	//ë°”ë‹¥ì„ ê·¸ë ¤ì£¼ì
 	for (int i = 0; i < 2; ++i)
 	{
 		_ptLand[i].x -= 5;
@@ -162,7 +165,7 @@ void gameStudy::update()
 		_land[i] = RectMakeCenter(_ptLand[i].x, _ptLand[i].y, _width[i], _height);
 	}
 
-	//Àå¾Ö¹°À» ±×·ÁÁÖÀÚ
+	//ì¥ì• ë¬¼ì„ ê·¸ë ¤ì£¼ì
 	for (int i = 0; i < 3; ++i)
 	{
 		_ptHurdle[i].x -= 5;
@@ -187,7 +190,7 @@ void gameStudy::update()
 	_hurdle[1] = RectMakeCenter(_ptHurdle[1].x, _ptHurdle[1].y, 50, 300);
 	_hurdle[2] = RectMakeCenter(_ptHurdle[2].x, _ptHurdle[2].y, 50, 50);
 
-	//ÇÃ·¹ÀÌ¾îÀÇ À§Ä¡¸¦ ´Ù½Ã ±×·ÁÁÖÀÚ
+	//í”Œë ˆì´ì–´ì˜ ìœ„ì¹˜ë¥¼ ë‹¤ì‹œ ê·¸ë ¤ì£¼ì
 	_rc = RectMake(_rc.left, _rc.top, 50, 50);
 
 	gameNode::update();
